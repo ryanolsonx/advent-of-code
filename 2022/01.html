@@ -2291,10 +2291,10 @@
     R.map(addCalories),
     R.split("\n\n")
   );
-  const sumTop3 = R.compose(R.sum, R.take(3));
+  const sumTop3 = R.compose(R.sum, R.take(3), sortDesc);
 
   const part1 = R.compose(getMax, getTotalCaloriesForEach);
-  const part2 = R.compose(sumTop3, sortDesc, getTotalCaloriesForEach);
+  const part2 = R.compose(sumTop3, getTotalCaloriesForEach);
 
   console.log(part1(input));
   console.log(part2(input));
