@@ -1,6 +1,23 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
 
 <script>
+  const sortDesc = R.sort(R.descend(R.identity));
+  const getMax = R.reduce(R.max, 0);
+  const addCalories = R.compose(
+    R.reduce(R.add, 0),
+    R.filter(Boolean),
+    R.split("\n"),
+    R.trim
+  );
+  const getTotalCaloriesForEach = R.compose(
+    R.map(addCalories),
+    R.split("\n\n")
+  );
+  const sumTop3 = R.compose(R.sum, R.take(3), sortDesc);
+
+  const part1 = R.compose(getMax, getTotalCaloriesForEach);
+  const part2 = R.compose(sumTop3, getTotalCaloriesForEach);
+
   const example = `
 1000
 2000
@@ -2279,23 +2296,5 @@
 3420
   `;
 
-  const sortDesc = R.sort(R.descend(R.identity));
-  const getMax = R.reduce(R.max, 0);
-  const addCalories = R.compose(
-    R.reduce(R.add, 0),
-    R.filter(Boolean),
-    R.split("\n"),
-    R.trim
-  );
-  const getTotalCaloriesForEach = R.compose(
-    R.map(addCalories),
-    R.split("\n\n")
-  );
-  const sumTop3 = R.compose(R.sum, R.take(3), sortDesc);
-
-  const part1 = R.compose(getMax, getTotalCaloriesForEach);
-  const part2 = R.compose(sumTop3, getTotalCaloriesForEach);
-
-  console.log(part1(input));
-  console.log(part2(input));
+  console.log(`part 1: ${part1(input)} | part 2 ${part2(input)}`);
 </script>
